@@ -1,0 +1,6 @@
+backup
+backup_main
+**/downloads/**
+go.sum
+vendor
+resources
