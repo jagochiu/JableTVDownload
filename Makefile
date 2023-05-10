@@ -3,6 +3,7 @@ DOCKER_IMAGE_REPO=jagochiu/jable
 DOCKER_IMAGE_VERSION=latest
 
 run:
+	touch resources
 	go mod tidy 
 	go mod vendor 
 	go run main.go

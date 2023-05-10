@@ -153,5 +153,4 @@ func mergeBar(dir, id string, segments []*Segment) (string, error) {
 
 		}
 	}
-	return ``, nil
 }
