@@ -11,7 +11,7 @@ import (
 )
 
 func Download(url, defaultPATH string) int {
-	status := 0
+	status := 1
 	pwd, driverPath := getConfigPath(defaultPATH)
 
 	// 建立番號資料夾
@@ -72,8 +72,9 @@ func Download(url, defaultPATH string) int {
 	hlsDL := NewHLS(m3u8url, nil, exportPATH, runtime.NumCPU(), true, id+".MP4")
 	segments, err := hlsDL.Download(m3u8uri, m3u8iv)
 	if err != nil {
-		os.RemoveAll(segmentsPATH)
-		panic(err)
+		os.RemoveAll(exportPATH)
+		// panic(err)
+		return 429
 	}
 
 	// 合併 mp4

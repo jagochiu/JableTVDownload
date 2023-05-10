@@ -26,19 +26,27 @@ func main() {
 		url := strings.TrimSpace(scan.Text())
 		if !strings.HasPrefix(url, "#") && strings.HasPrefix(url, "http") {
 			start := time.Now()
-			jabletools.Download(url, `/Volumes/Jago/Downloads/AVs/Jable.TV`)
-			del_URL(url, resources_file_path)
+			status := jabletools.Download(url, `/Volumes/Jago/Downloads/AVs/Jable.TV`)
+			switch status {
+			case 429:
+				del_URL(url, resources_file_path, true)
+			default:
+				del_URL(url, resources_file_path, false)
+			}
 			common.DurationCheck(start)
 		}
 	}
 	resources_file.Close()
 }
-func del_URL(url, path string) {
+func del_URL(url, path string, common bool) {
 	input, err := ioutil.ReadFile(path)
 	if err != nil {
 		log.Printf("[DELETE] %v \n ", err)
 	}
 	output := strings.ReplaceAll(string(input), url+"\n", "")
+	if common {
+		output += "\n# # " + url
+	}
 	err = ioutil.WriteFile(path, []byte(output), 0777)
 	if err != nil {
 		log.Printf("[DELETE] %v \n ", err)
